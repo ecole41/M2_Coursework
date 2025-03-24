@@ -48,7 +48,7 @@ for layer in model.model.layers:
 # ^These are the parts that will actually be trained!
 
 # Process the data into sequences of text
-train_texts, val_texts, norm_factor = load_and_preprocess("lotka_volterra_data.h5")
+train_texts, val_texts, test_texts, norm_factor = load_and_preprocess("lotka_volterra_data.h5")
 
 # ^Each of these is a `list[str]` representing contiguous parts of the time series,
 #  in text form (using the LLMTIME scheme).
