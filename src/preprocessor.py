@@ -42,7 +42,35 @@ def load_and_preprocess(data_path):
     final_trajects=convert_string(scaled_trajectories, 3)
 
     train_data = final_trajects[:train_size]
-    val_data = final_trajects[train_size:]
-
-    return train_data, val_data , norm_factor
+    val_data = final_trajects[train_size:train_size+100]
+    test_data = final_trajects[train_size+100:]
+    
+    return train_data, val_data , test_data, norm_factor
    
+def reverse_preprocessing(data):
+    # Split the string by semicolons to get pairs
+    pairs = data.split(';')
+    
+    # Remove any empty string after the final semicolon
+    pairs = [pair for pair in pairs if pair]
+    
+    # Initialize two empty arrays for A and B
+    A = []
+    B = []
+    
+    # Iterate over each pair, split it by comma, and append to respective arrays
+    for pair in pairs:
+        try:
+            # Attempt to split the pair by a comma
+            a, b = pair.split(',')
+            
+            # Attempt to convert both parts to floats
+            A.append(float(a))  # Convert the first part to float and append to A
+            B.append(float(b))  # Convert the second part to float and append to B
+            
+        except ValueError:
+            # If there's a ValueError (invalid number format), append NaN to both arrays
+            A.append(np.nan)
+            B.append(np.nan)
+    
+    return A, B
